@@ -69,5 +69,32 @@
         "prev_hash": "00b78f7c692cf85c94169b677714956552cfcc65e381c70df817ebdd27b73518",
         "nonce": 234,
         "hash": "0080b2da759fde9b21a648386ebff11e6d324554c6833e908c9da3f2796de346"
+    },
+    {
+        "index": 3,
+        "timestamp": 1753951912.3864048,
+        "transactions": [
+            {
+                "sender": "coinbase",
+                "recipient": "7374dcbd4b6be6e7132b9381a390d5f1430708ce0566d27bde4490cdbcb87782c676a13adb7fe0fac75107806bbdf5799910998db0e1417590319a40b4d3c958",
+                "amount": 50,
+                "timestamp": 1753951912.3862007,
+                "txid": "8190e1e87e407053c6a8d649e23c5a9c3a835e507d6f55c1109d59d3759f77e6",
+                "signature": "coinbase_signature"
+            },
+            {
+                "sender": "380c6104c2e761dcaed07008309e11429918180def901c180e879af9a6d04ff4eed9e83476b5daceeb8f2e575361cfba696a8610cb03a7824e640038ee30056c",
+                "recipient": "c4048be8d934017383e466a2eeade35113d89bd5c67f04dc772f95c2cc9bc1f43d08c1dd041196e03e9e882238213ba507c0e76db1f8b80fc2e324e0c39d16dd",
+                "amount": 100.0,
+                "timestamp": 1753951911.5627124,
+                "txid": "dfadff300251f025a9a312b7161315edcd704904c8f9cb8a4af40b16e59302d9",
+                "signature": "95ac70ae906631dd5dae7d1d915425011eacae4958cc8c1368d3d847447c2137e1494539a5bce90c9005da10ea07d45618cb40ec01286a7e5b4ca20df284a8c9",
+                "sender_display": "PHNc23f3f4b493f342a19d88167ea98d54ddd99a47e",
+                "recipient_display": "PHN81e8e260c6ec2a2b7a5dee8bb6625d49fb8d18a7"
+            }
+        ],
+        "prev_hash": "0080b2da759fde9b21a648386ebff11e6d324554c6833e908c9da3f2796de346",
+        "nonce": 129,
+        "hash": "00b30aa22404594d3c78ba228386a9241917bebfcd6c05b7f60011b4d06dcfbd"
     }
 ]
