@@ -1,5 +1,4 @@
-# Ignore everything by default
-*
+
 
 # Keep these files
 !miner.py

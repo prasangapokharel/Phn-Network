@@ -5,9 +5,9 @@ import time
 import hashlib
 import argparse
 from ecdsa import SigningKey, SECP256k1
-from config import NODE_PORT, DIFFICULTY, BLOCK_REWARD
 
-NODE_URL = f"ws://31.97.229.45:{NODE_PORT}"
+# Node WebSocket URL (hardcoded or could come from .env or argument)
+NODE_URL = "ws://31.97.229.45:8765"  # replace port if needed
 MINING_INTERVAL = 1  # seconds
 
 # --- Wallet utilities ---
@@ -22,6 +22,15 @@ def get_display_address(canonical_pub_hex):
     return "PHN" + hashlib.sha256(pub_bytes).hexdigest()[:40]
 
 # --- Blockchain communication ---
+async def get_node_info(ws):
+    """Fetch node info like difficulty and block reward from the node."""
+    await ws.send(json.dumps({"type": "get_node_info"}))
+    data = json.loads(await ws.recv())
+    # Expected response keys: difficulty, block_reward
+    difficulty = data.get("difficulty", 4)  # default fallback
+    block_reward = data.get("block_reward", 1)  # default fallback
+    return difficulty, block_reward
+
 async def get_pending_transactions(ws):
     await ws.send(json.dumps({"type": "get_pending"}))
     data = json.loads(await ws.recv())
@@ -49,6 +58,9 @@ async def mine(miner_canonical_address):
         async with websockets.connect(NODE_URL) as ws:
             print("✅ Connected to node!")
 
+            difficulty, block_reward = await get_node_info(ws)
+            print(f"⚙️ Difficulty: {difficulty}, Block Reward: {block_reward}")
+
             while True:
                 blockchain, chain_length = await get_blockchain_info(ws)
                 if not blockchain:
@@ -66,17 +78,17 @@ async def mine(miner_canonical_address):
 
                 print(f"\nFound {len(pending)} pending transactions. Mining...")
 
-                # Coinbase TX (Block Reward = 1)
+                # Coinbase transaction paying miner the block reward
                 coinbase_tx = {
                     "sender": "coinbase",
                     "recipient": miner_canonical_address,
-                    "amount": BLOCK_REWARD,
+                    "amount": block_reward,
                     "timestamp": time.time(),
                     "txid": hashlib.sha256(f"coinbase_{miner_canonical_address}_{time.time()}".encode()).hexdigest(),
                     "signature": "coinbase_signature"
                 }
 
-                # Block Candidate
+                # Prepare block candidate
                 block_candidate = {
                     "index": chain_length,
                     "timestamp": time.time(),
@@ -85,7 +97,7 @@ async def mine(miner_canonical_address):
                     "nonce": 0
                 }
 
-                target_prefix = '0' * DIFFICULTY
+                target_prefix = '0' * difficulty
                 nonce = 0
                 start_time = time.time()
 
