@@ -22,3 +22,4 @@ if __name__ == "__main__":
     print(f"Private Key (hex): {priv_key}")
     print(f"Canonical Address (128-char hex): {canonical_addr}")
     print(f"PHN Display Address: {phn_addr}")
+
