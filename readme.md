@@ -40,7 +40,7 @@ All commands should be run from the project root directory. Ensure `p2p_node.py`
 Run this first to generate or load the owner's wallet, which receives the initial PHN allocation.
 
 ```bash
-python scripts/owner.py
+python owner.py
 ```
 
 ### Step 2: Start the Blockchain Node
@@ -52,7 +52,7 @@ start.bat
 
 *Alternatively, run manually:*
 ```bash
-python scripts/p2p_node.py
+python p2p_node.py
 ```
 
 ### Step 3: Start Mining
@@ -65,40 +65,41 @@ mining.bat
 *Alternatively, run manually:*
 - With a new wallet (saved to `mined.txt`):
   ```bash
-  python scripts/miner.py --generate
+  python miner.py --generate
   ```
 - With an existing wallet (e.g., `owner.txt`):
   ```bash
-  python scripts/miner.py --wallet owner.txt
+  python miner.py --wallet owner.txt
   ```
 
 ### Step 4: Interact with the Network
 - **Send Transactions**:
   ```bash
-  python scripts/send_tx.py ws://localhost:8765 <sender_wallet_file> <recipient_canonical_address> <amount>
+  python send_tx.py ws://localhost:8765 <sender_wallet_file> <recipient_canonical_address> <amount>
   ```
   Example:
   ```bash
-  python scripts/send_tx.py ws://localhost:8765 owner.txt 380c6104c2e761dcaed07008309e11429918180def901c180e879af9a6d04ff4eed9e83476b5daceeb8f2e575361cfba696a8610cb03a7824e640038ee30056c 500
+  python send_tx.py ws://31.97.229.45:8765 <your_private_key_hex> 44d5b083f14cb7fc532ef394438e4606de6ddb7dd2db6b35a40d2fd99e8e2b3635dba575aaa59ad0c4e5400f3b1f021ae2bf1632daa9d6a86d8914faff42416a 1
+
   ```
 
 - **Check Balance**:
   ```bash
-  python scripts/check_balance.py ws://localhost:8765 <canonical_address>
+  python check_balance.py ws://localhost:8765 bd4a8333ad5e46c0c8f9863ddce4f0ef687f0372fa82268e7b084215c49ab815193adc5460d38b21b20da8f0a89b066a4daa3c452f9b54947ca5e59b29cc0724
   ```
   Example:
   ```bash
-  python scripts/check_balance.py ws://localhost:8765 380c6104c2e761dcaed07008309e11429918180def901c180e879af9a6d04ff4eed9e83476b5daceeb8f2e575361cfba696a8610cb03a7824e640038ee30056c
+  python check_balance.py ws://localhost:8765 286bd8dd4f035ef0e89e413002d9aca33a2c7c694dfd79e9f2297200b496e928d4e91ffb93c0b30413222e60cc3bd3b68d7e2d15a5ad656c90fd27a3bab7e54e
   ```
 
 - **Interactive Client**:
   ```bash
-  python scripts/blockchain_client.py
+  python blockchain_client.py
   ```
 
 - **Generate New Wallet**:
   ```bash
-  python scripts/wallet.py
+  python wallet.py
   ```
 
 ## Key Files
@@ -108,7 +109,7 @@ mining.bat
 
 ## Running the Network (Step-by-Step)
 
-1. Run `python scripts/owner.py` to initialize the owner wallet.
+1. Run `python owner.py` to initialize the owner wallet.
 2. Open a new terminal and run `start.bat` to start the node.
 3. Open another terminal and run `mining.bat` to start mining.
 4. Use `send_tx.py`, `check_balance.py`, or `blockchain_client.py` to interact with the network.

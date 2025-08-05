@@ -5,7 +5,7 @@ from wallet import load_wallet
 
 async def test_node():
     """Test the blockchain node functionality"""
-    node_url = "ws://localhost:8765"
+    node_url = "ws://31.97.229.45:8765"
     
     print("🧪 Testing Blockchain Node...")
     print("="*50)

@@ -7,6 +7,16 @@ import os # Import os for file path operations
 from ecdsa import VerifyingKey, SECP256k1, BadSignatureError
 from wallet import load_wallet, get_display_address
 from config import NODE_PORT, DIFFICULTY, BLOCK_REWARD, TOTAL_SUPPLY, MINABLE_SUPPLY, OWNER_ALLOCATION
+from dotenv import load_dotenv
+import os
+
+# Load the .env file
+load_dotenv()
+
+
+# Get variables
+node_url = os.getenv("NODE_URL")
+node_port = os.getenv("NODE_PORT")
 
 # Global variables
 blockchain = []
@@ -23,7 +33,7 @@ def save_blockchain():
             json.dump(blockchain, f, indent=4)
         print(f"Blockchain saved to {BLOCKCHAIN_FILE}")
     except Exception as e:
-        print(f"❌ Error saving blockchain: {e}")
+        print(f" Error saving blockchain: {e}")
 
 def load_blockchain():
     """Loads the blockchain from a JSON file."""
@@ -42,11 +52,11 @@ def load_blockchain():
                     blockchain = [] # Reset if invalid
                     return False
         except json.JSONDecodeError as e:
-            print(f"❌ Error decoding blockchain from {BLOCKCHAIN_FILE}: {e}. Starting fresh.")
+            print(f" Error decoding blockchain from {BLOCKCHAIN_FILE}: {e}. Starting fresh.")
             blockchain = [] # Reset if corrupted
             return False
         except Exception as e:
-            print(f"❌ Error loading blockchain from {BLOCKCHAIN_FILE}: {e}. Starting fresh.")
+            print(f" Error loading blockchain from {BLOCKCHAIN_FILE}: {e}. Starting fresh.")
             blockchain = [] # Reset on other errors
             return False
     else:
@@ -62,8 +72,8 @@ def initialize_node():
         sk, OWNER_ADDRESS = load_wallet("owner.txt") # OWNER_ADDRESS is the canonical address
         print(f"Node initialized with owner wallet: {get_display_address(OWNER_ADDRESS)} ({OWNER_ADDRESS[:8]}...)")
     except Exception as e:
-        print(f"❌ Error loading owner wallet from owner.txt: {e}")
-        print("Please run 'python scripts/owner.py' first to set up the owner wallet.")
+        print(f" Error loading owner wallet from owner.txt: {e}")
+        print("Please run 'python owner.py' first to set up the owner wallet.")
         exit(1) # Exit if owner wallet cannot be loaded/created
 
     # Attempt to load existing blockchain
@@ -344,7 +354,7 @@ async def handle_submit_block(ws, msg):
     
     is_valid, error_msg = validate_block(block)
     if not is_valid:
-        print(f"❌ Invalid block submitted: {error_msg}")
+        print(f" Invalid block submitted: {error_msg}")
         await ws.send(json.dumps({"status": "error", "message": error_msg}))
         return
     
@@ -357,7 +367,7 @@ async def handle_submit_block(ws, msg):
     global pending_txs
     pending_txs = [tx for tx in pending_txs if tx["txid"] not in mined_tx_ids]
     
-    print(f"🎉 Block #{block['index']} accepted! Mined by {get_display_address(block['transactions'][0]['recipient'])}")
+    print(f" Block #{block['index']} accepted! Mined by {get_display_address(block['transactions'][0]['recipient'])}")
     print(f"   New blockchain length: {len(blockchain)}")
     print(f"   Pending transactions remaining: {len(pending_txs)}")
     
@@ -367,16 +377,16 @@ async def handle_message(ws, message):
     """Handle incoming WebSocket messages"""
     try:
         msg = json.loads(message)
-        print(f"📨 Received message: {msg.get('type', 'unknown')}")
+        print(f" Received message: {msg.get('type', 'unknown')}")
     except json.JSONDecodeError as e:
-        print(f"❌ Invalid JSON: {e}")
+        print(f" Invalid JSON: {e}")
         try:
             await ws.send(json.dumps({"error": "Invalid JSON"}))
         except:
             pass
         return
     except Exception as e:
-        print(f"❌ Error parsing message: {e}")
+        print(f" Error parsing message: {e}")
         return
     
     message_type = msg.get("type")
@@ -395,7 +405,7 @@ async def handle_message(ws, message):
         else:
             await ws.send(json.dumps({"error": "Unknown message type"}))
     except Exception as e:
-        print(f"❌ Error handling message type '{message_type}': {e}")
+        print(f" Error handling message type '{message_type}': {e}")
         try:
             await ws.send(json.dumps({"error": f"Internal server error: {str(e)}"}))
         except:
@@ -424,8 +434,8 @@ async def main():
         # Initialize node
         initialize_node()
         
-        print(f"🚀 P2P Blockchain Node starting...")
-        print(f"   WebSocket server: ws://localhost:{NODE_PORT}")
+        print(f" P2P Blockchain Node starting...")
+        print(f"WebSocket server: {node_url}{node_port}")        
         print(f"   Owner address (canonical): {OWNER_ADDRESS[:8]}...")
         print(f"   Owner address (display): {get_display_address(OWNER_ADDRESS)}")
         print(f"   Owner balance: {get_balance(OWNER_ADDRESS)} PHN (initial allocation from genesis)")
@@ -447,7 +457,7 @@ async def main():
             server.close()
             await server.wait_closed()
     except Exception as e:
-        print(f"❌ Server error: {e}")
+        print(f" Server error: {e}")
         import traceback
         traceback.print_exc()
 
@@ -455,6 +465,6 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\n👋 Node stopped.")
+        print("\n Node stopped.")
     except Exception as e:
-        print(f"❌ Fatal error: {e}")
+        print(f" Fatal error: {e}")

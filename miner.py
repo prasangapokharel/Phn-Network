@@ -8,7 +8,7 @@ from ecdsa import SigningKey, SECP256k1
 from wallet import load_wallet, generate_wallet, save_wallet, get_display_address
 from config import NODE_PORT, DIFFICULTY, BLOCK_REWARD
 
-NODE_URL = f"ws://localhost:{NODE_PORT}"
+NODE_URL = f"ws://31.97.229.45:{NODE_PORT}"
 MINING_INTERVAL = 1 # seconds to wait if no pending transactions
 
 async def get_pending_transactions(ws):

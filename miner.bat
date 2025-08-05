@@ -1,7 +1,7 @@
 @echo off
-title Phonesium Node
+title Phonesium Node 
 echo ==============================
-echo   Starting Mining Node...
+echo   Starting World Mining Node...
 echo ==============================
 python miner.py
 pause
