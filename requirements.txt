@@ -1,3 +1,3 @@
 dotenv
-psutil
-hashlib
+websockets
+ecdsa
