@@ -67,29 +67,29 @@ mining.bat
   ```bash
   python miner.py --generate
   ```
-- With an existing wallet (e.g., `owner.txt`):
+- With an existing wallet (e.g., `private_key`):
   ```bash
-  python miner.py --wallet owner.txt
+  python miner.py --wallet private_key
   ```
 
 ### Step 4: Interact with the Network
 - **Send Transactions**:
   ```bash
-  python send_tx.py ws://localhost:8765 <sender_wallet_file> <recipient_canonical_address> <amount>
+  python send_tx.py ws://31.97.229.45:8765 <sender_wallet_file> <recipient_canonical_address> <amount>
   ```
   Example:
   ```bash
-  python send_tx.py ws://31.97.229.45:8765 <your_private_key_hex> 44d5b083f14cb7fc532ef394438e4606de6ddb7dd2db6b35a40d2fd99e8e2b3635dba575aaa59ad0c4e5400f3b1f021ae2bf1632daa9d6a86d8914faff42416a 1
+  python send_tx.py ws://31.97.229.45:8765 <private key> 44d5b083f14cb7fc532ef394438e4606de6ddb7dd2db6b35a40d2fd99e8e2b3635dba575aaa59ad0c4e5400f3b1f021ae2bf1632daa9d6a86d8914faff42416a 1
 
   ```
 
 - **Check Balance**:
   ```bash
-  python check_balance.py ws://localhost:8765 bd4a8333ad5e46c0c8f9863ddce4f0ef687f0372fa82268e7b084215c49ab815193adc5460d38b21b20da8f0a89b066a4daa3c452f9b54947ca5e59b29cc0724
+  python check_balance.py ws://31.97.229.45:8765 bd4a8333ad5e46c0c8f9863ddce4f0ef687f0372fa82268e7b084215c49ab815193adc5460d38b21b20da8f0a89b066a4daa3c452f9b54947ca5e59b29cc0724
   ```
   Example:
   ```bash
-  python check_balance.py ws://localhost:8765 286bd8dd4f035ef0e89e413002d9aca33a2c7c694dfd79e9f2297200b496e928d4e91ffb93c0b30413222e60cc3bd3b68d7e2d15a5ad656c90fd27a3bab7e54e
+  python check_balance.py ws://31.97.229.45:8765 286bd8dd4f035ef0e89e413002d9aca33a2c7c694dfd79e9f2297200b496e928d4e91ffb93c0b30413222e60cc3bd3b68d7e2d15a5ad656c90fd27a3bab7e54e
   ```
 
 - **Interactive Client**:
@@ -103,7 +103,7 @@ mining.bat
   ```
 
 ## Key Files
-- **`owner.txt`**: Stores the owner's private key and canonical address. **Keep secure!**
+- **`private_key`**: Stores the owner's private key and canonical address. **Keep secure!**
 - **`wallet.txt` / `mined.txt`**: Stores user or miner keys and addresses.
 - **`blockchain.json`**: Stores the blockchain history. **Do not manually edit.**
 
