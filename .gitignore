@@ -1,8 +1,26 @@
+# Ignore everything by default
+*
 
+# Keep these files
+!miner.py
+!blockchain_client.py
+!README*
+!wallet.py
+!.gitignore
+!miner.bat
+
+
+# Ignore sensitive or dev files explicitly
 .env
 owner.txt
 owner.py
-/p2p_node.py
-/wallet.txt
-/owner
-/bat
+p2p_node.py
+wallet.txt
+owner/
+bat/
+
+# Ignore Python cache & temp files
+__pycache__/
+*.pyc
+*.pyo
+*.log
